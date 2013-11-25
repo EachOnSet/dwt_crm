@@ -1,0 +1,68 @@
+part of dwt_crm_lib;
+
+var contactsModelJson = r'''
+{
+    "width":990,
+    "height":580,
+    "boxes":[
+        {
+            "name":"Contact",
+            "entry":true,
+            "x":248,
+            "y":433,
+            "width":120,
+            "height":120,
+            "items":[
+                {
+                    "sequence":10,
+                    "name":"code",
+                    "category":"identifier",
+                    "type":"String",
+                    "init":"",
+                    "essential":true,
+                    "sensitive":false
+                },
+                {
+                    "sequence":20,
+                    "name":"name",
+                    "category":"required",
+                    "type":"String",
+                    "init":"",
+                    "essential":true,
+                    "sensitive":false
+                },
+                {
+                    "sequence":30,
+                    "name":"email",
+                    "category":"required",
+                    "type":"String",
+                    "init":"",
+                    "essential":true,
+                    "sensitive":false
+                },
+                {
+                    "sequence":40,
+                    "name":"phone",
+                    "category":"required",
+                    "type":"String",
+                    "init":"",
+                    "essential":true,
+                    "sensitive":false
+                },
+                {
+                    "sequence":50,
+                    "name":"deleted",
+                    "category":"required",
+                    "type":"bool",
+                    "init":"false",
+                    "essential":false,
+                    "sensitive":false
+                }
+            ]
+        }
+    ],
+    "lines":[
+        
+    ]
+}
+''';

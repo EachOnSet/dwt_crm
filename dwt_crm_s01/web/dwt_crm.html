@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dwt crm</title>
+    <link rel="stylesheet" href="dwt_crm.css">
+  </head>
+  <body>
+    <header id="title">
+      <h1>DWT CRM</h1>
+    </header>
+    
+    <!--<aside id="left">
+      <h3>Options</h3>
+        <ul id="config">
+          <!--<li class="config-item"><span id="view-button">View entries</span></li>
+          <li class="config-item"><span id="add-button">Add entry</span></li>
+        </ul>
+        <div id='menu'/></div>
+      <h3 id="error"></h3>
+      <h3 id="confirm"></h3>
+    </aside>
+    
+    <section id="right">
+      <div id='entities'/></div>
+      <div id="add-contacts" class="hidden"></div>
+      <div id="contacts"></div>
+    </section>-->
+    
+  <section id="todoapp">
+    <header id="header">
+      <input id="new-name" placeholder="Add someone" autofocus>
+      <input id="new-phone" placeholder="Phone">
+      <input id="new-email" placeholder="Email">
+    </header>
+    <section id="main">
+      <input id="toggle-all" type="checkbox">
+      <label for="toggle-all">Mark all as deleted</label>
+      <ul id="todo-list">
+      </ul>
+    </section>
+    <!-- This footer should hidden by default and shown when there are todos -->
+    <footer id="footer">
+      <span id="todo-count"><strong>0</strong> contact</span>
+      <!-- Remove this if you don't implement routing -->
+      <ul id="filters">
+        <li>
+          <a class="selected" href="#/">All</a>
+        </li>
+        <li>
+          <a href="#/active">Active</a>
+        </li>
+        <li>
+          <a href="#/completed">Deleted</a>
+        </li>
+      </ul>
+      <button id="clear-completed">Clear completed (0)</button>
+    </footer>
+  </section> 
+        
+    <!--<footer id="footgit">
+      <p id="follow">Follow me on <a href="https://github.com/EachOnSet/" target="_blank"><img class="github" src="img/github.png"></a></p> 
+    </footer>!-->
+    
+    <script type="application/dart" src="dwt_crm.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+    <iframe src="javascript:''"
+            id="__dwt_historyFrame"
+            style="width:0;height:0;border:0"></iframe>
+  </body>
+</html>
