@@ -10,6 +10,8 @@ class Person extends ui.Composite {
   ui.Label _name;
   ui.Label _email;
   ui.Label _phone;
+  ui.Button _save;
+  ui.Button _cancel;
   ui.Button _remove;
   ui.Grid _grid;
 
@@ -20,7 +22,7 @@ class Person extends ui.Composite {
     DomainSession session = todoApp.session;
     Contacts contacts = todoApp.contacts;
 
-    _grid = new ui.Grid(1, 5);
+    _grid = new ui.Grid(1, 7);
     _grid.setCellSpacing(8);
     _grid.addStyleName('todo');
     _grid.getRowFormatter().setVerticalAlign(
@@ -57,278 +59,88 @@ class Person extends ui.Composite {
     person_rephone.text = _phone.text;
     person_rephone.addStyleName('todo retitle');
     var person_reemail = new ui.TextBox();
-    person_reemail.text = _phone.text;
+    person_reemail.text = _email.text;
     person_reemail.addStyleName('todo retitle');
-    var newName = person_rename.text;
-    var newPhone = person_rephone.text;
-    var newEmail = person_reemail.text;
-    var otherTask = contacts.firstWhereAttribute('email', newEmail);
     
     _name.addDoubleClickHandler(
       new event.DoubleClickHandlerAdapter((event.DoubleClickEvent e) {
         _completed.visible = false;
         _remove.visible = false;
-        // Name
-        person_rename.addKeyPressHandler(new
-          event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-          if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-            if (otherTask == null) {
-              bool done1 = new SetAttributeAction(
-                  session, contact, 'name', newName).doit();
-              bool done2 = new SetAttributeAction(
-                  session, contact, 'phone', newPhone).doit();
-              bool done3 = new SetAttributeAction(
-                  session, contact, 'email', newEmail).doit();
-              if (!done1 && !done2 && !done3) {
-                contacts.errors.clear();
-              }
-            } else {
-              _displayPerson();
-              _name.text = newName;
-              _phone.text = newPhone;
-              _email.text = newEmail;
-            }
-          } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-            _displayPerson();
-          }
-        })
-      );
-      _grid.setWidget(0, 1, person_rename);
-      
-      // Phone
-      person_rephone.addKeyPressHandler(new
-        event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-          if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-            if (otherTask == null) {
-              bool done1 = new SetAttributeAction(
-                  session, contact, 'name', newName).doit();
-              bool done2 = new SetAttributeAction(
-                  session, contact, 'phone', newPhone).doit();
-              bool done3 = new SetAttributeAction(
-                  session, contact, 'email', newEmail).doit();
-              if (!done1 && !done2 && !done3) {
-                contacts.errors.clear();
-              }
-            } else {
-              _displayPerson();
-              _name.text = newName;
-              _phone.text = newPhone;
-              _email.text = newEmail;
-            }
-          } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-            _displayPerson();
-          }
-        })
-      );
-      _grid.setWidget(0, 2, person_rephone);
-      
-      // Email
-      person_reemail.addKeyPressHandler(new
-        event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-          if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-            if (otherTask == null) {
-              bool done1 = new SetAttributeAction(
-                  session, contact, 'name', newName).doit();
-              bool done2 = new SetAttributeAction(
-                  session, contact, 'phone', newPhone).doit();
-              bool done3 = new SetAttributeAction(
-                  session, contact, 'email', newEmail).doit();
-              if (!done1 && !done2 && !done3) {
-                contacts.errors.clear();
-              }
-            } else {
-              _displayPerson();
-              _name.text = newName;
-              _phone.text = newPhone;
-              _email.text = newEmail;
-            }
-          } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-            _displayPerson();
-          }
-        })
-      );
-      _grid.setWidget(0, 3, person_reemail);
+        _save.visible = true;
+        _cancel.visible = true;
+        _grid.setWidget(0, 1, person_rename);
+        _grid.setWidget(0, 2, person_rephone);
+        _grid.setWidget(0, 3, person_reemail);
       })
     );
     
     _phone.addDoubleClickHandler(
-        new event.DoubleClickHandlerAdapter((event.DoubleClickEvent e) {
-          _completed.visible = false;
-          _remove.visible = false;
-          // Name
-          person_rename.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 1, person_rename);
-          
-          // Phone
-          person_rephone.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 2, person_rephone);
-          
-          // Email
-          person_reemail.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 3, person_reemail);
-        })
+      new event.DoubleClickHandlerAdapter((event.DoubleClickEvent e) {
+        _completed.visible = false;
+        _remove.visible = false;
+        _save.visible = true;
+        _cancel.visible = true;
+        _grid.setWidget(0, 1, person_rename);
+        _grid.setWidget(0, 2, person_rephone);
+        _grid.setWidget(0, 3, person_reemail);
+      })
     );
     
     _email.addDoubleClickHandler(
-        new event.DoubleClickHandlerAdapter((event.DoubleClickEvent e) {
-          _completed.visible = false;
-          _remove.visible = false;
-          // Name
-          person_rename.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 1, person_rename);
-          
-          // Phone
-          person_rephone.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 2, person_rephone);
-          
-          // Email
-          person_reemail.addKeyPressHandler(new
-              event.KeyPressHandlerAdapter((event.KeyPressEvent e) {
-                if (e.getNativeKeyCode() == event.KeyCodes.KEY_ENTER) {
-                  if (otherTask == null) {
-                    bool done1 = new SetAttributeAction(
-                        session, contact, 'name', newName).doit();
-                    bool done2 = new SetAttributeAction(
-                        session, contact, 'phone', newPhone).doit();
-                    bool done3 = new SetAttributeAction(
-                        session, contact, 'email', newEmail).doit();
-                    if (!done1 && !done2 && !done3) {
-                      contacts.errors.clear();
-                    }
-                  } else {
-                    _displayPerson();
-                    _name.text = newName;
-                    _phone.text = newPhone;
-                    _email.text = newEmail;
-                  }
-                } else if (e.getNativeKeyCode() == event.KeyCodes.KEY_ESCAPE) {
-                  _displayPerson();
-                }
-              })
-          );
-          _grid.setWidget(0, 3, person_reemail);
-        })
+      new event.DoubleClickHandlerAdapter((event.DoubleClickEvent e) {
+        _completed.visible = false;
+        _remove.visible = false;
+        _save.visible = true;
+        _cancel.visible = true;
+        _grid.setWidget(0, 1, person_rename);
+        _grid.setWidget(0, 2, person_rephone);
+        _grid.setWidget(0, 3, person_reemail);
+      })
     );
+    
+    // Save button
+    _save = new ui.Button(
+      'S', new event.ClickHandlerAdapter((event.ClickEvent e) {
+        var newName = person_rename.text;
+        var newPhone = person_rephone.text;
+        var newEmail = person_reemail.text;
+        var otherTask = contacts.firstWhereAttribute('email', newEmail);
+        if (otherTask == null) {
+          bool done1 = new SetAttributeAction(
+              session, contact, 'name', newName).doit();
+          bool done2 = new SetAttributeAction(
+              session, contact, 'phone', newPhone).doit();
+          bool done3 = new SetAttributeAction(
+              session, contact, 'email', newEmail).doit();
+          if (!done1 && !done2 && !done3) {
+            contacts.errors.clear();
+          }
+        } else {
+          _displayPerson();
+          _name.text = newName;
+          _phone.text = newPhone;
+          _email.text = newEmail;
+        }
+      })
+    );
+    _save.addStyleName('todo-button remove');
+    _grid.setWidget(0, 4, _save);
+    
+    // Cancel button
+    _cancel = new ui.Button(
+      'C', new event.ClickHandlerAdapter((event.ClickEvent e) {
+        _displayPerson();
+      })
+    );
+    _cancel.addStyleName('todo-button remove');
+    _grid.setWidget(0, 5, _cancel);
     
     _grid.setWidget(0, 1, _name);
     _grid.setWidget(0, 2, _phone);
     _grid.setWidget(0, 3, _email);
-
+    _save.visible = false;
+    _cancel.visible = false;
+    
     // Remove button
     _remove = new ui.Button(
       'X', new event.ClickHandlerAdapter((event.ClickEvent e) {
@@ -336,7 +148,7 @@ class Person extends ui.Composite {
       })
     );
     _remove.addStyleName('todo-button remove');
-    _grid.setWidget(0, 4, _remove);
+    _grid.setWidget(0, 6, _remove);
   }
 
   /**
@@ -361,6 +173,8 @@ class Person extends ui.Composite {
   _displayPerson() {
     _completed.visible = true;
     _remove.visible = true;
+    _save.visible = false;
+    _cancel.visible = false;
     _grid.setWidget(0, 1, _name);
     _grid.setWidget(0, 2, _phone);
     _grid.setWidget(0, 3, _email);

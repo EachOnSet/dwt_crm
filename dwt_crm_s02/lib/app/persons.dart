@@ -23,6 +23,10 @@ class Persons extends ui.VerticalPanel implements ActionReactionApi {
     String json = window.localStorage['crm-dartling-dwt'];
     if (json != null && json != "[]") {
       try {
+        var countactsCount = contacts.count;
+        for (int i=countactsCount; i > 0;i--){
+          contacts.remove(contacts.internalList.elementAt(i-1));
+        }
         contacts.fromJson(JSON.decode(json));
         for (Contact contact in contacts) {
           _add(contact);
@@ -34,6 +38,8 @@ class Persons extends ui.VerticalPanel implements ActionReactionApi {
       for (Contact contact in contacts) {
         _add(contact);
       }
+    } else {
+      //Nothing to add, not supposed to arrive here
     }
   }
 
